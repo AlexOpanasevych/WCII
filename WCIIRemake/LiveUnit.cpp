@@ -93,10 +93,15 @@ ThreadId LiveUnit::getMoveToTHRDDescriptor()
 bool LiveUnit::goTo(cordScr* dest, bool & flag) {
 	threadFlag = true;
 
-	FastPath* fastpath = new FastPath(this->field, this);
+//	FastPath* fastpath = new FastPath(this->field, this);
+	AStar* astarSearch = new AStar(this->field->getHeigth(), this->field->getWidth());
 	int timeoutCounter = 0;
 	while (flag && timeoutCounter <= TimeoutTimes && this->health > 0) {
-		int direction = fastpath->solveDirection(*dest);
+		astarSearch->getMap(this->field->getMembers(), this->type, this);
+//		int direction = fastpath->solveDirection(*dest);
+		astarSearch->aStarSearch(this->getCord(), *dest);
+		int direction = astarSearch->getPath();
+		cout << "Unit " << this->value <<" move direction = " << direction << endl; //-----------------------------------------------------------------???????????????????
 		if (direction == -1) {
 			break;
 		}
@@ -111,7 +116,8 @@ bool LiveUnit::goTo(cordScr* dest, bool & flag) {
 			Sleep(this->moveSpeed + rand() % 20);
 		}
 	}
-	delete fastpath;
+//	delete fastpath;
+	delete astarSearch;
 	threadFlag = false;
 	return true;
 }

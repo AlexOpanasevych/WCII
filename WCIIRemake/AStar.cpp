@@ -3,17 +3,45 @@
 using namespace std;
 
 
-void AStar::getMap(DynArr * field, int type, Unit & unt) {
+void AStar::getMap(DynArr * field, int type, Unit * unt) {
+	/*
 	int count = 0;
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
-			if (field[i*count+j].count() == 0 || unt.getType() == type) {
+			if (field[i*count+j].count() == 0 || unt.getType() == type) { 
 				grid[i][j] = 1;
 			}
 			else grid[i][j] = 0;
+
+			cout << grid[i][j] << " ";
 		}
 		count++;
+		cout << endl << endl;
 	}
+	*/
+
+	for (int i = 0; i < field->count(); i++) {
+		Unit* temp = (Unit*)(field->get(i));
+		if (temp->getType() == type && temp != unt) {
+			int x = temp->getCord().x;
+			int y = temp->getCord().y;
+			if (x < rows && x >= 0 && y < columns && y >= 0) {
+				grid[y][x] = 0;
+			}
+		}
+	}
+
+
+/*
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < columns; j++) {
+			cout << grid[i][j];
+		}
+		cout << endl;
+	}
+	cout << endl << endl;
+*/
+	//Sleep(3000);
 }
 
 void AStar::DebugMap() {
@@ -65,6 +93,7 @@ AStar::AStar(int h, int w) {
 		closedList[i] = new bool[columns];
 		for (int j = 0; j < columns; j++) {
 			closedList[i][j] = false;
+			grid[i][j] = 1; //-----------------------------
 		}
 	}
 }
@@ -492,6 +521,7 @@ void AStar::aStarSearch(cordScr start, cordScr dest)
 	if (foundDest == false) {
 		//printf("Failed to find the Destination Cell\n");
 		direction = 0;
+/*
 		double minHWalue = FLT_MAX;
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
@@ -511,6 +541,7 @@ void AStar::aStarSearch(cordScr start, cordScr dest)
 			}
 		}
 		//cout << minHWalue;
+*/
 	}
 	return;
 }

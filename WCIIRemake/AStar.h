@@ -38,13 +38,13 @@ class AStar : public Obj {
 		int **grid;
 		int direction;
 	public:
+		AStar(int h, int w);
+		~AStar();
 		void getPathMap(); //show path(debug)
-		void getMap(DynArr * field, int type, Unit & unt); // for transformation in bool map
+		void getMap(DynArr * field, int type, Unit * unt); // for transformation in bool map
 		void DebugMap();
 		int rows;
 		int columns;
-		AStar(int h, int w);
-		~AStar();
 		void Dijkstra(cordScr start, cordScr dest); // path search of Dijkstra(not developed)
 		int getPath();// returns 1 - up, 2 - down, 3 - right, 4 - left, 5 - north east, 6 - north west, 7 - south east, 8 - south west
 		void aStarSearch(cordScr start, cordScr dest); // main function for astar search, from start to destination
