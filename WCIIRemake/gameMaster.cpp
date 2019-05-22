@@ -68,6 +68,8 @@ GameMaster::GameMaster() {
 
 	Controller* oldgc = gameController;
 	gameController = new Controller(this->field, scr, defaultConsole, this);
+
+
 	gameController->setup(defaultConsole, this->scr, this->field, this);
 	if (oldgc) {
 		delete oldgc;
