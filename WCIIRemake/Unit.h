@@ -27,6 +27,9 @@ protected:
 	int width;
 	int heigth;
 	//TODO: add friend teams list
+protected:
+	WORD color;
+	WORD baseColor;
 public:
 	Unit(char value, int type, Field* field, int health, int team);
 	Unit() : Unit('d', 1, NULL, 100, 0) {}

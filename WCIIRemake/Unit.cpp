@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Unit.h"
+#include "ConsoleCommandController.h"
 
 extern Controller* gameController;
 extern ThreadDescriptor* gameThreads;
@@ -17,6 +18,8 @@ Unit::Unit(char value, int type, Field* field, int health, int team) {
 	this->width = 1;
 	this->heigth = 1;
 	this->attackLength = 0;
+	this->color = COLOR_WHITE;
+	this->baseColor = this->color;
 //	cout << "Constructor: created unit " << this->value << " type " << this->type << endl;
 }
 
@@ -50,10 +53,27 @@ char Unit::getValue() {
 void Unit::render(int layer) {
 	if (parentScreen != NULL /*&& this->layer == layer*/) { 
 		cordScr shift;
+		CScreenPixel tempPixel(this->value, this->color);
 		if (field) {
 			shift = this->field->getCords();
+
+			if (this->field->parentScreen) {
+				EV_CScreen_Controlled* t_scr = dynamic_cast<EV_CScreen_Controlled*>(this->field->parentScreen);
+				if (t_scr) {
+					if (t_scr->parentCCC) {
+						if (t_scr->parentCCC->getTeam()) {
+
+						}
+					}
+				}
+			}
 		}
-		parentScreen->putToBuff(this->cords + shift, CScreenPixel(this->value, COLOR_WHITE));
+
+
+		if (this->field->parentScreen->parentCCC) {
+
+		}
+		parentScreen->putToBuff(this->cords + shift, CScreenPixel(this->value, this->color));
 	}
 }
 
